@@ -1,0 +1,19 @@
+    Ensure you have the following MP3s (or placeholders) in your audio/ folder:
+
+        audio/quick_calm_1min.mp3 (New - for the home page)
+
+        audio/mindful_breathing_3min.mp3 (Existing)
+
+        audio/mindful_breathing_5min.mp3 (New)
+
+        audio/body_scan_10min.mp3 (New)
+
+        audio/mindful_listening_sounds_3min.mp3 (New)
+
+        audio/thoughts_as_clouds_5min.mp3 (New)
+
+        audio/stop_practice_2min.mp3 (New - can be a guided talk)
+
+        audio/loving_kindness_5min.mp3 (Existing)
+
+        audio/gratitude_reflection_4min.mp3 (New)

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Brain Power MW</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 2em;
+            background-color: #f4f7f6;
+            color: #333;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 4em); /* Full height minus padding */
+        }
+        .offline-container {
+            max-width: 600px;
+        }
+        img#offline-logo {
+            max-height: 60px;
+            margin-bottom: 1em;
+        }
+        h1 {
+            color: #4A90E2;
+            margin-bottom: 0.5em;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 1.5em;
+        }
+        a.home-link {
+            display: inline-block;
+            background-color: #4A90E2;
+            color: white;
+            padding: 0.8em 1.5em;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        a.home-link:hover {
+            background-color: #357ABD;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json"> <!-- Good practice to include manifest -->
+</head>
+<body>
+    <div class="offline-container">
+        <img src="images/logo.png" alt="Brain Power Logo" id="offline-logo">
+        <h1>You are Offline</h1>
+        <p>It looks like you're not connected to the internet right now. Some content may be unavailable.</p>
+        <p>Please check your connection or try returning to the <a href="index.html" class="home-link">Homepage</a> (which might work if cached).</p>
+    </div>
+</body>
+</html>
