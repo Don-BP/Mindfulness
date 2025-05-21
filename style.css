@@ -18,54 +18,92 @@ body {
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    padding-top: 0; /* Adjust based on fixed header height if needed */
 }
 
 /* --- Header --- */
 header {
     background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); /* Calming blue gradient */
     color: white;
-    padding: 1em;
+    padding: 0.8em 1em; /* Adjusted padding for consistency */
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
 }
 
 .header-top-row {
     display: flex; 
-    flex-direction: column; 
-    align-items: center;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Distribute space */
     width: 100%; 
-    margin-bottom: 0.5em; /* Reduced from 0.8 for tighter feel */
-    position: relative; 
+    margin-bottom: 0.5em; /* Space before nav (if nav is below on desktop) */
+    position: relative; /* For potential absolute positioning of children if needed */
 }
 
 #logo {
-    max-height: 45px; /* Slightly smaller */
-    margin-bottom: 0.2em; 
+    max-height: 40px; 
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+    flex-shrink: 0; 
+    order: 2; /* Default order: hamburger, logo, lang toggle */
+    margin: 0 auto; /* Center logo if title is hidden */
 }
 
 header h1#app-title {
-    font-size: 1.6em; /* Adjusted */
+    font-size: 1.6em; /* Desktop size */
     font-weight: 600;
     letter-spacing: 0.5px;
-    margin: 0;
-    padding: 0 50px; /* Add padding to prevent overlap with lang button */
+    margin: 0 0.5em; 
+    padding: 0; 
+    text-align: center; 
+    flex-grow: 1; /* Allow title to take available space */
+    order: 2; /* Default order for desktop */
 }
 
-/* --- Navigation --- */
+/* --- Hamburger Menu Button --- */
+#hamburger-btn {
+    display: none; /* Hidden by default, shown on mobile via media query */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8em; /* Larger tap target */
+    cursor: pointer;
+    padding: 0.2em 0.4em;
+    z-index: 1005; 
+    order: 1; /* Position hamburger first on mobile */
+}
+
+#hamburger-btn span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hamburger animation to X */
+#hamburger-btn.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+#hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+#hamburger-btn.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* --- Navigation (Desktop First) --- */
 nav {
-    margin-top: 0.5em; /* Adjusted */
+    margin-top: 0.5em;
     margin-bottom: 0.5em; 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.5em; /* Slightly smaller gap */
+    gap: 0.5em; 
     width: 100%; 
 }
 
@@ -73,10 +111,10 @@ nav button {
     background-color: rgba(255, 255, 255, 0.9);
     color: #357ABD;
     border: 1px solid transparent;
-    padding: 0.4em 0.8em; /* Adjusted padding */
-    border-radius: 18px; /* Slightly smaller radius */
+    padding: 0.4em 0.8em; 
+    border-radius: 18px; 
     cursor: pointer;
-    font-size: 0.85em; /* Adjusted font size */
+    font-size: 0.85em; 
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -98,32 +136,32 @@ nav button.active {
 }
 
 /* Header Controls (Language Toggle & Install Button) */
-.header-controls {
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin-top: 0.5em; 
-    width: 100%; 
-}
-
 #language-toggle-btn {
     background-color: rgba(255, 255, 255, 0.2);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.7);
     padding: 0.4em 0.8em;
     border-radius: 15px;
-    font-size: 0.85em;
+    font-size: 0.8em; 
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    position: absolute;
-    top: 10px; 
-    right: 15px; 
+    order: 3; /* Default order for desktop */
+    margin-left: 0.5em; 
+    flex-shrink: 0;
 }
 
 #language-toggle-btn:hover {
     background-color: rgba(255, 255, 255, 0.3);
+}
+
+.header-controls { /* Install button container */
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0.5em; 
+    width: 100%; 
 }
 
 #install-button-container {
@@ -326,6 +364,15 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
 .engagement-section h3, .content-section h3 { 
     font-size: 1.35em; color: #2980b9; margin-bottom: 0.8em; font-weight: 600; 
 }
+/* Ensure h4 in teacher resource page curriculum module also gets styling */
+.curriculum-module h4, .resource-section h4, .content-section h4 {
+    font-size: 1.1em; color: #3498db; margin-top: 0.8em; margin-bottom: 0.4em; font-weight: 500;
+}
+.curriculum-module h5 { /* For Optional Extension Lessons title */
+    font-size: 1.05em; color: #16a085; margin-top: 1em; margin-bottom: 0.3em; font-weight: 500;
+}
+
+
 .curriculum-module p, .about-section p, .resource-section p, .faq-item p, 
 .engagement-section p, .parents-page p, .school-pathways-page p, .research-evidence-page p, .content-section p { 
     font-size: 1em; color: #555e68; margin-bottom: 1em; 
@@ -355,7 +402,8 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
 .faq-item h3.faq-question:hover { background-color: #e9ecef; }
 .faq-item h3.faq-question::after { content: '▼'; font-size: 0.8em; transition: transform 0.3s ease; }
 .faq-item.open h3.faq-question::after { transform: rotate(180deg); }
-.faq-answer { padding: 1.2em; background-color: #fff; border-top: 1px solid #e7edf2; }
+.faq-answer { padding: 1.2em; background-color: #fff; border-top: 1px solid #e7edf2; display: none; /* Hidden by default */}
+.faq-item.open .faq-answer { display: block; } /* Show when parent is open */
 .faq-answer p { font-size: 0.95em; color: #495057; margin-bottom: 0.5em;}
 .faq-answer p:last-child { margin-bottom: 0; }
 
@@ -387,18 +435,84 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
 }
 
 /* --- Responsive Adjustments --- */
-@media (max-width: 900px) { /* Adjust breakpoint for nav buttons */
-    nav button { font-size: 0.8em; padding: 0.35em 0.7em; }
-}
 
+/* Medium screens and below (Tablet portrait and Mobile) - Hamburger menu active */
+@media (max-width: 768px) {
+    .header-top-row {
+        /* justify-content: space-between; /* Already set */
+        /* padding-right: 0; /* Not needed if lang button flows */
+    }
+    #logo { 
+        max-height: 35px; 
+        order: 2; /* Hamburger, Logo, Lang Toggle */
+        margin: 0 auto; /* This helps center it when title is gone */
+    } 
+    header h1#app-title { 
+        display: none; /* Hide title on smaller screens */
+    } 
+    
+    #hamburger-btn {
+        display: block; /* Show hamburger */
+        order: 1; 
+    }
+    #language-toggle-btn {
+        position: static; /* Remove absolute positioning */
+        order: 3; 
+        font-size: 0.75em;
+        padding: 0.3em 0.6em;
+        margin-left: 0.5em; /* Some space from logo/hamburger */
+    }
 
-@media (max-width: 768px) { /* Medium screens */
-    .header-top-row { flex-direction: row; justify-content: center; align-items: center; gap: 10px; padding-right: 70px; /* Space for lang button */ }
-    #logo { margin-bottom: 0; max-height: 40px; }
-    header h1#app-title { font-size: 1.4em; text-align: left; } 
-    #language-toggle-btn { top: 8px; right: 10px; padding: 0.3em 0.6em; font-size: 0.75em;}
-    nav { gap: 0.4em; }
-    nav button { font-size: 0.8em; padding: 0.35em 0.7em; }
+    nav {
+        display: none; /* Hide nav by default, shown by JS */
+        flex-direction: column;
+        position: absolute; /* Take out of flow, position relative to header */
+        top: 100%; /* Start right below the header */
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); /* Match header */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Drop shadow for depth */
+        z-index: 999; /* Ensure it's on top of main content */
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        max-height: calc(100vh - 60px); /* Prevent menu from being too long, 60px is approx header height */
+        overflow-y: auto; /* Allow scrolling if many items */
+
+    }
+
+    nav.nav-open {
+        display: flex; /* Show nav when active */
+    }
+
+    nav button {
+        width: calc(100% - 2em); /* Full width with padding on sides */
+        margin: 0.3em auto; /* Centered with vertical gap */
+        text-align: left;
+        padding: 0.8em 1em;
+        border-radius: 5px; /* Flatter style for dropdown */
+        background-color: transparent;
+        color: white;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        font-size: 0.95em; /* Good touch size */
+    }
+    nav button:last-child {
+        border-bottom: none;
+    }
+
+    nav button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(0); /* No hover transform needed in dropdown */
+        color: white;
+    }
+
+    nav button.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        font-weight: bold;
+        box-shadow: none; /* Remove inset shadow */
+    }
+
+    /* Other general 768px styles */
     .hero-section h2 { font-size: 1.8em; }
     .hero-section p { font-size: 1em; }
     .practice-category > h3 { font-size: 1.4em; }
@@ -410,16 +524,14 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
     #large-countdown-timer { font-size: 4.5em; padding: 20px 35px; }
 }
 
-@media (max-width: 600px) { /* Small screens */
-    header { padding: 0.8em; }
-    .header-top-row { flex-direction: column; margin-bottom: 0.5em; padding-right: 0;} 
-    #logo { margin-bottom: 0.2em; max-height: 40px;}
-    header h1#app-title { font-size: 1.3em; text-align: center; padding: 0 10px; } 
-    #language-toggle-btn { position: absolute; top: 8px; right: 10px; } 
-    nav { flex-direction: column; gap: 0.5em; margin-top: 0.5em; margin-bottom: 0.5em; }
-    nav button { width: 90%; max-width: 280px; margin: 0.2em auto; font-size: 0.9em; } /* Slightly larger for touch */
-    .header-controls { margin-top: 0.5em; }
-    #install-button-container { margin-top: 5px; }
+
+/* Small screens - further refinement if needed */
+@media (max-width: 600px) {
+    header { padding: 0.6em 0.8em; } 
+    #logo { max-height: 30px; }
+    
+    /* header h1#app-title might already be hidden by 768px rule, or re-evaluate if needed here */
+
     main { padding: 1.2em 1em; }
     .hero-section { padding: 2em 1em; }
     .hero-section h2 { font-size: 1.6em; }
@@ -431,10 +543,32 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
 }
 
 @media (max-width: 400px) {
-    header h1#app-title { font-size: 1.2em; }
-    nav button { font-size: 0.85em; } /* Readjust for very small */
+    /* header h1#app-title already hidden by 768px rule for this specific layout */
+    /* nav button already styled for mobile in 768px rule */
     .hero-section h2 { font-size: 1.4em; }
     .hero-section p { font-size: 0.9em; }
     #large-countdown-timer { font-size: 2.8em; padding: 10px 20px; }
-    #language-toggle-btn { font-size: 0.7em; padding: 0.25em 0.5em; top: 5px; right: 5px;}
+    #language-toggle-btn { font-size: 0.7em; padding: 0.25em 0.5em; }
+    #hamburger-btn { font-size: 1.6em; }
+}
+
+/* Desktop specific adjustments if needed for the new header structure */
+@media (min-width: 769px) {
+    .header-top-row {
+        justify-content: flex-start; /* Align items to start for desktop */
+    }
+    #logo { 
+        order: 1; 
+        margin-right: 1em; /* Space between logo and title */
+    }
+    header h1#app-title {
+        order: 2;
+        text-align: left; /* Align title to left on desktop */
+        margin-left: 0; /* Reset margin from mobile */
+        font-size: 1.6em; /* Restore desktop title size */
+    }
+    #language-toggle-btn {
+        order: 3;
+        margin-left: auto; /* Push language toggle to the far right */
+    }
 }

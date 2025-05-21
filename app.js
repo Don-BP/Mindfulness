@@ -13,6 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLanguage = localStorage.getItem('brainPowerMWLang') || (navigator.language.startsWith('ja') ? 'ja' : 'en');
     const languageToggleBtn = document.getElementById('language-toggle-btn');
 
+    // --- Hamburger Menu ---
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.querySelector('header nav'); // Target the nav element
+
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('nav-open');
+            const isExpanded = mainNav.classList.contains('nav-open');
+            hamburgerBtn.setAttribute('aria-expanded', isExpanded);
+            hamburgerBtn.classList.toggle('active', isExpanded); // For styling the X
+        });
+
+        // Close menu when a nav link is clicked (if nav is open)
+        mainNav.querySelectorAll('button[data-page]').forEach(button => {
+            button.addEventListener('click', () => {
+                if (mainNav.classList.contains('nav-open')) {
+                    mainNav.classList.remove('nav-open');
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    hamburgerBtn.classList.remove('active');
+                }
+            });
+        });
+    }
+    // --- End Hamburger Menu ---
+
+
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
@@ -1867,6 +1893,16 @@ document.addEventListener('DOMContentLoaded', () => {
             currentLanguage = currentLanguage === 'en' ? 'jp' : 'en';
             localStorage.setItem('brainPowerMWLang', currentLanguage);
             const currentPageButton = document.querySelector('nav button.active');
+            
+            // Close hamburger menu if open during language toggle
+            if (mainNav && mainNav.classList.contains('nav-open')) {
+                mainNav.classList.remove('nav-open');
+                if (hamburgerBtn) {
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    hamburgerBtn.classList.remove('active');
+                }
+            }
+
             if (currentPageButton) {
                 window.loadPage(currentPageButton.dataset.page, true); 
             } else {
@@ -1874,7 +1910,3 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
-    // Initial Page Load
-    window.loadPage('home'); 
-});
