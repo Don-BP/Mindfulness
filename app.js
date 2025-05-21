@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const appTitleH1 = document.getElementById('app-title');
     const pageTitleTag = document.querySelector('title');
     const htmlTag = document.documentElement;
+	const hamburgerBtn = document.getElementById('hamburger-btn');
+	const mainNav = document.querySelector('header nav');
+	console.log("Hamburger Button:", hamburgerBtn);
+	console.log("Main Nav Element:", mainNav);
 
     let currentLanguage = localStorage.getItem('brainPowerMWLang') || (navigator.language.startsWith('ja') ? 'ja' : 'en');
     const languageToggleBtn = document.getElementById('language-toggle-btn');
