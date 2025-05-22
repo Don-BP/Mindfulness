@@ -1,6 +1,7 @@
+// --- app.js ---
 document.addEventListener('DOMContentLoaded', () => {
     const contentArea = document.getElementById('content-area');
-    const navButtons = document.querySelectorAll('nav button');
+    // navButtons will be selected after mainNav is confirmed to exist
     const currentYearSpan = document.getElementById('current-year');
     const largeCountdownDisplay = document.getElementById('large-countdown-timer');
     let largeCountdownInterval = null;
@@ -9,45 +10,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const appTitleH1 = document.getElementById('app-title');
     const pageTitleTag = document.querySelector('title');
     const htmlTag = document.documentElement;
-	const hamburgerBtn = document.getElementById('hamburger-btn');
-	const mainNav = document.querySelector('header nav');
-	console.log("Hamburger Button:", hamburgerBtn);
-	console.log("Main Nav Element:", mainNav);
 
     let currentLanguage = localStorage.getItem('brainPowerMWLang') || (navigator.language.startsWith('ja') ? 'ja' : 'en');
     const languageToggleBtn = document.getElementById('language-toggle-btn');
 
-    // --- Hamburger Menu ---
+    // --- Hamburger Menu Elements (Declared ONCE here) ---
     const hamburgerBtn = document.getElementById('hamburger-btn');
-    const mainNav = document.querySelector('header nav'); // Target the nav element
+    const mainNav = document.getElementById('main-nav'); // Use getElementById for the nav with ID
+    let navButtons; // Declare here, define after mainNav check
 
     if (hamburgerBtn && mainNav) {
+        navButtons = mainNav.querySelectorAll('button[data-page]'); // Define navButtons here
+
         hamburgerBtn.addEventListener('click', () => {
             mainNav.classList.toggle('nav-open');
             const isExpanded = mainNav.classList.contains('nav-open');
             hamburgerBtn.setAttribute('aria-expanded', isExpanded);
-            hamburgerBtn.classList.toggle('active', isExpanded); // For styling the X
+            hamburgerBtn.classList.toggle('active', isExpanded); 
         });
 
-        // Close menu when a nav link is clicked (if nav is open)
-        mainNav.querySelectorAll('button[data-page]').forEach(button => {
+        // Close menu when a nav link is clicked
+        navButtons.forEach(button => {
             button.addEventListener('click', () => {
                 if (mainNav.classList.contains('nav-open')) {
                     mainNav.classList.remove('nav-open');
-                    hamburgerBtn.setAttribute('aria-expanded', 'false');
-                    hamburgerBtn.classList.remove('active');
+                    if (hamburgerBtn) { // Check if hamburgerBtn exists
+                        hamburgerBtn.setAttribute('aria-expanded', 'false');
+                        hamburgerBtn.classList.remove('active');
+                    }
                 }
             });
         });
+    } else {
+        console.error("Hamburger button or main navigation (#main-nav) not found. Check HTML IDs.");
+        // Fallback for navButtons if mainNav isn't found, to prevent further errors
+        // though the primary issue is the missing hamburger/nav
+        navButtons = document.querySelectorAll('header nav button'); 
     }
     // --- End Hamburger Menu ---
-
 
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // --- HELPER FUNCTIONS (DEFINED AT TOP) ---
+    // --- HELPER FUNCTIONS ---
     function formatTime(totalSeconds) {
         if (isNaN(totalSeconds) || totalSeconds < 0) return "0:00";
         const minutes = Math.floor(totalSeconds / 60);
@@ -280,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
             jhsWeek6D5: "Review - Becoming Wiser About Our Thoughts & Mindful Choice.",
             
             jhsWeek7Title: "Week 7 (Deeper Dive): Feelings, Emotional Regulation & R.A.I.N. (.b)",
-            jhsWeek7D1: "Emotions as Energy in Motion (Exploring the physicality of emotions).",
+            jhsWeek7D1: "Emotions are Energy in Motion (Exploring the physicality of emotions).",
             jhsWeek7D2: "S.T.O.P. for Strong Feelings (Applying to real-life scenarios).",
             jhsWeek7D3: "Making Space for Feelings with R.A.I.N. (Recognize, Allow, Investigate, Nurture - simplified).",
             jhsWeek7D4: "Choosing Our Response to Feelings (Cultivating wise action).",
@@ -904,7 +910,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
     
-    // Pages object now contains the full HTML for each page directly
     const pages = { 
         home: `
             <section id="home-page" class="page-content active">
@@ -1463,6 +1468,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+         // Translate hamburger aria-label
+        if (hamburgerBtn) { // Check if hamburgerBtn exists
+            hamburgerBtn.setAttribute('aria-label', currentLanguage === 'en' ? "Toggle navigation menu" : "ナビゲーションメニューを開閉");
+        }
     }
     
     function renderPractices(isTranslationUpdate = false) {
@@ -1595,8 +1604,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     window.loadPage = (pageName, isLangChange = false) => { 
         clearLargeCountdown();
+        
+        if (mainNav && mainNav.classList.contains('nav-open')) {
+            const previouslyActivePage = document.querySelector('nav#main-nav button.active')?.dataset.page;
+             if (!isLangChange || (isLangChange && previouslyActivePage !== pageName)) {
+                mainNav.classList.remove('nav-open');
+                if (hamburgerBtn) {
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    hamburgerBtn.classList.remove('active');
+                }
+            }
+        }
+
         if (pages[pageName]) {
-            const previouslyActivePage = document.querySelector('nav button.active')?.dataset.page;
+            const previouslyActivePage = document.querySelector('nav#main-nav button.active')?.dataset.page;
 
             if (!isLangChange || (isLangChange && previouslyActivePage !== pageName) ) {
                 document.querySelectorAll('audio').forEach(audio => {
@@ -1647,12 +1668,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.page-content.active').forEach(el => el.classList.remove('active'));
             if(newPageContent) newPageContent.classList.add('active');
 
-            navButtons.forEach(button => {
-                button.classList.remove('active');
-                if (button.dataset.page === pageName) {
-                    button.classList.add('active');
-                }
-            });
+            if (navButtons) { // Check if navButtons is defined
+                navButtons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.dataset.page === pageName) {
+                        button.classList.add('active');
+                    }
+                });
+            }
             translatePage();
         } else {
             contentArea.innerHTML = `<p>Content for '${pageName}' not found.</p>`;
@@ -1660,12 +1683,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    navButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const pageName = event.target.dataset.page;
-            window.loadPage(pageName);
+    if (navButtons) { // Check if navButtons is defined before adding listeners
+        navButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const pageName = event.target.dataset.page;
+                window.loadPage(pageName);
+            });
         });
-    });
+    }
     
     window.handleAudioControl = (audioId, buttonEl) => {
         const audio = document.getElementById(audioId);
@@ -1883,7 +1908,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
                 })
                 .catch(error => {
-                    // Don't log error if running from file:/// as SW requires HTTP/HTTPS
                     if (!location.protocol.startsWith('file')) {
                         console.log('ServiceWorker registration failed: ', error);
                     }
@@ -1891,14 +1915,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // --- Language Toggle Setup and Initial Page Load ---
     if (languageToggleBtn) {
         languageToggleBtn.addEventListener('click', () => {
             currentLanguage = currentLanguage === 'en' ? 'jp' : 'en';
             localStorage.setItem('brainPowerMWLang', currentLanguage);
-            const currentPageButton = document.querySelector('nav button.active');
             
-            // Close hamburger menu if open during language toggle
             if (mainNav && mainNav.classList.contains('nav-open')) {
                 mainNav.classList.remove('nav-open');
                 if (hamburgerBtn) {
@@ -1906,7 +1927,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     hamburgerBtn.classList.remove('active');
                 }
             }
-
+            const currentPageButton = document.querySelector('nav#main-nav button.active');
             if (currentPageButton) {
                 window.loadPage(currentPageButton.dataset.page, true); 
             } else {
@@ -1914,3 +1935,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
+    window.loadPage('home'); 
+});

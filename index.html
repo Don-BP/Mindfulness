@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4A90E2"/>
-    <title data-lang-key="appTitle">Brain Power MW</title> <!-- Added data-lang-key -->
+    <title data-lang-key="appTitle">Brain Power MW</title>
     <!-- Google Font: Poppins & Noto Sans JP -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,27 +17,30 @@
 </head>
 <body>
     <header>
-        <div class="header-top-row"> <!-- Added for better structure -->
+        <div class="header-top-row">
+            <button id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <img src="images/logo.png" alt="Brain Power Logo" id="logo">
-            <h1 id="app-title" data-lang-key="appTitle">Brain Power Mindfulness & Wellness</h1> <!-- Added ID and data-lang-key -->
-            <button id="language-toggle-btn" data-lang-key="toggleToJapanese">日本語へ</button> <!-- Moved here & added data-lang-key -->
+            <h1 id="app-title" data-lang-key="appTitle">Brain Power Mindfulness & Wellness</h1>
+            <button id="language-toggle-btn" data-lang-key="toggleToJapanese">日本語へ</button>
         </div>
-        <nav>
+        <nav id="main-nav"> <!-- Correct HTML comment: Added ID to nav for more specific JS selection -->
             <button data-page="home" class="active" data-lang-key="navHome">Home</button>
             <button data-page="practices" data-lang-key="navPractices">Practices</button>
             <button data-page="studentZone" data-lang-key="navStudentZone">Student Zone</button>
             <button data-page="elementaryCurriculum" data-lang-key="navElementary">Kids (ES)</button>
             <button data-page="juniorHighCurriculum" data-lang-key="navJuniorHigh">Kids (JHS)</button>
             <button data-page="adultCurriculum" data-lang-key="navAdults">Adults</button>
-            <!-- New Nav Buttons -->
             <button data-page="forParents" data-lang-key="navForParents">For Parents</button> 
             <button data-page="schoolPathways" data-lang-key="navSchoolPathways">School Pathways</button>
             <button data-page="teacherResources" data-lang-key="navTeacherResources">Teacher Resources</button>
             <button data-page="researchEvidence" data-lang-key="navResearchEvidence">Research</button>
-            <!-- End New Nav Buttons -->
             <button data-page="about" data-lang-key="navAbout">About MW</button>
         </nav>
-        <div class="header-controls"> <!-- Kept for install button -->
+        <div class="header-controls">
             <div id="install-button-container" style="text-align: center; margin-top: 10px;">
                 <!-- Install button will be injected here by app.js -->
             </div>

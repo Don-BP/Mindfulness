@@ -10,7 +10,7 @@
 
 body {
     font-family: 'Poppins', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f0f4f8; /* Light, calming blue-grey */
+    background-color: #f0f4f8;
     color: #333;
     line-height: 1.7;
     display: flex;
@@ -18,14 +18,13 @@ body {
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding-top: 0; /* Adjust based on fixed header height if needed */
 }
 
 /* --- Header --- */
 header {
-    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); /* Calming blue gradient */
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
     color: white;
-    padding: 0.8em 1em; /* Adjusted padding for consistency */
+    padding: 0.8em 1em;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -35,43 +34,43 @@ header {
 
 .header-top-row {
     display: flex; 
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Distribute space */
+    align-items: center;
+    justify-content: space-between; 
     width: 100%; 
-    margin-bottom: 0.5em; /* Space before nav (if nav is below on desktop) */
-    position: relative; /* For potential absolute positioning of children if needed */
+    margin-bottom: 0.5em; 
+    position: relative; 
 }
 
 #logo {
     max-height: 40px; 
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
     flex-shrink: 0; 
-    order: 2; /* Default order: hamburger, logo, lang toggle */
-    margin: 0 auto; /* Center logo if title is hidden */
+    order: 2; /* Hamburger, Logo, Lang */
+    margin: 0 auto; /* Helps center when title is hidden on mobile */
 }
 
 header h1#app-title {
-    font-size: 1.6em; /* Desktop size */
+    font-size: 1.6em; /* Desktop default */
     font-weight: 600;
     letter-spacing: 0.5px;
     margin: 0 0.5em; 
     padding: 0; 
     text-align: center; 
-    flex-grow: 1; /* Allow title to take available space */
-    order: 2; /* Default order for desktop */
+    flex-grow: 1;
+    order: 2; /* Default: After logo on desktop */
 }
 
 /* --- Hamburger Menu Button --- */
 #hamburger-btn {
-    display: none; /* Hidden by default, shown on mobile via media query */
+    display: none; /* Hidden by default, shown on mobile */
     background: none;
     border: none;
     color: white;
-    font-size: 1.8em; /* Larger tap target */
+    font-size: 1.8em; 
     cursor: pointer;
     padding: 0.2em 0.4em;
     z-index: 1005; 
-    order: 1; /* Position hamburger first on mobile */
+    order: 1; /* First item in the row for mobile */
 }
 
 #hamburger-btn span {
@@ -84,7 +83,6 @@ header h1#app-title {
     transition: all 0.3s ease-in-out;
 }
 
-/* Hamburger animation to X */
 #hamburger-btn.active span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -95,9 +93,8 @@ header h1#app-title {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-
 /* --- Navigation (Desktop First) --- */
-nav {
+nav#main-nav { /* Using ID for more specificity */
     margin-top: 0.5em;
     margin-bottom: 0.5em; 
     display: flex;
@@ -107,7 +104,7 @@ nav {
     width: 100%; 
 }
 
-nav button {
+nav#main-nav button {
     background-color: rgba(255, 255, 255, 0.9);
     color: #357ABD;
     border: 1px solid transparent;
@@ -120,14 +117,14 @@ nav button {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-nav button:hover {
+nav#main-nav button:hover {
     background-color: white;
     color: #4A90E2;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-nav button.active {
+nav#main-nav button.active {
     background-color: #ffffff;
     color: #357ABD;
     font-weight: 600;
@@ -146,7 +143,7 @@ nav button.active {
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    order: 3; /* Default order for desktop */
+    order: 3; /* Last item in the row */
     margin-left: 0.5em; 
     flex-shrink: 0;
 }
@@ -162,10 +159,6 @@ nav button.active {
     gap: 8px;
     margin-top: 0.5em; 
     width: 100%; 
-}
-
-#install-button-container {
-   /* No specific styles needed if button takes general style */
 }
 
 /* --- Main Content Area --- */
@@ -212,110 +205,23 @@ footer {
     color: #333;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-.hero-section h2 {
-    font-size: 2.2em;
-    color: #2c3e50;
-    margin-bottom: 0.5em;
-    font-weight: 700;
-}
-.hero-section p {
-    font-size: 1.1em;
-    color: #555e68;
-    margin-bottom: 1.5em;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.general-app-button { 
-    color: white;
-    border: none;
-    padding: 0.7em 1.4em;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.9em;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none; 
-}
-.general-app-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-.hero-button { 
-    font-size: 1.1em !important;
-    padding: 0.8em 2em !important;
-    background-color: #e67e22 !important;
-}
-.hero-button:hover {
-    background-color: #d35400 !important;
-}
-
-.home-content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5em;
-    margin-bottom: 2em;
-}
-.home-card {
-    background-color: #fff;
-    padding: 1.5em;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.07);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex; /* For flex layout inside card */
-    flex-direction: column; /* Stack items vertically */
-    justify-content: space-between; /* Distribute space */
-}
-.home-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-.home-card-icon {
-    max-height: 60px;
-    margin-bottom: 1em;
-    align-self: center; /* Center icon */
-}
-.home-card h3 {
-    font-size: 1.25em;
-    color: #357ABD;
-    margin-bottom: 0.5em;
-    font-weight: 600;
-}
-.home-card p {
-    font-size: 0.9em;
-    color: #555e68;
-    margin-bottom: 1em;
-    flex-grow: 1; /* Allow p to take available space */
-}
-.home-card .general-app-button { 
-    background-color: #3498db;
-    align-self: center; /* Center button */
-    margin-top: auto; /* Push to bottom if card heights vary */
-}
-.home-card .general-app-button:hover {
-    background-color: #2980b9;
-}
-
-#featured-practice {
-    background-color: #ffffff;
-    padding: 1.5em;
-    margin-top: 2em;
-    border-radius: 12px;
-    border: 1px solid #e0e7ef;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-}
+.hero-section h2 { font-size: 2.2em; color: #2c3e50; margin-bottom: 0.5em; font-weight: 700; }
+.hero-section p { font-size: 1.1em; color: #555e68; margin-bottom: 1.5em; max-width: 600px; margin-left: auto; margin-right: auto; }
+.general-app-button { color: white; border: none; padding: 0.7em 1.4em; border-radius: 20px; cursor: pointer; font-size: 0.9em; font-weight: 500; letter-spacing: 0.5px; transition: all 0.25s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.general-app-button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+.hero-button { font-size: 1.1em !important; padding: 0.8em 2em !important; background-color: #e67e22 !important; }
+.hero-button:hover { background-color: #d35400 !important; }
+.home-content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5em; margin-bottom: 2em; }
+.home-card { background-color: #fff; padding: 1.5em; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.07); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; }
+.home-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.home-card-icon { max-height: 60px; margin-bottom: 1em; align-self: center; }
+.home-card h3 { font-size: 1.25em; color: #357ABD; margin-bottom: 0.5em; font-weight: 600; }
+.home-card p { font-size: 0.9em; color: #555e68; margin-bottom: 1em; flex-grow: 1; }
+.home-card .general-app-button { background-color: #3498db; align-self: center; margin-top: auto; }
+.home-card .general-app-button:hover { background-color: #2980b9; }
+#featured-practice { background-color: #ffffff; padding: 1.5em; margin-top: 2em; border-radius: 12px; border: 1px solid #e0e7ef; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); }
 #featured-practice h3 { margin-top: 0; color: #357ABD; font-size: 1.3em; font-weight: 600; }
-#featured-practice .practice-controls .general-app-button {
-    padding: 0.6em 1.2em;
-    font-size: 0.85em;
-}
-
+#featured-practice .practice-controls .general-app-button { padding: 0.6em 1.2em; font-size: 0.85em; }
 
 /* --- Practice List & Controls --- */
 .practice-category { margin-top: 2.5em; padding-top: 1.5em; border-top: 1px solid #dde4eb; }
@@ -327,74 +233,32 @@ footer {
 .practice-list li h3 { font-size: 1.2em; color: #4A90E2; margin-bottom: 0.4em; font-weight: 600; }
 p.practice-description { font-size: 0.95em; color: #555e68; margin-bottom: 1em; }
 .practice-controls { margin-top: 1em; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-
-.practice-controls .general-app-button {
-    padding: 0.6em 1.2em; 
-    font-size: 0.85em; 
-}
-
+.practice-controls .general-app-button { padding: 0.6em 1.2em; font-size: 0.85em; }
 button[data-action="play"].general-app-button { background-color: #2ecc71; }
 button[data-action="play"].general-app-button:hover { background-color: #27ae60; }
 button.playing.general-app-button, button[data-action="pause"].general-app-button { background-color: #f39c12; }
 button.playing.general-app-button:hover, button[data-action="pause"].general-app-button:hover { background-color: #e67e22; }
 button.restart-button.general-app-button { background-color: #3498db; }
 button.restart-button.general-app-button:hover { background-color: #2980b9; }
-
 button[data-action="play"].general-app-button::before { content: "▶ "; margin-right: 5px; }
 button.playing.general-app-button::before, button[data-action="pause"].general-app-button::before { content: "❚❚ "; margin-right: 5px; font-size: 0.8em; }
 button.restart-button.general-app-button::before { content: "↺ "; margin-right: 5px; }
-
 .progress-bar-container { width: 100%; background-color: #ecf0f1; border-radius: 25px; height: 12px; margin-top: 1em; cursor: pointer; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); }
 .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #5DADE2 0%, #4A90E2 100%); border-radius: 25px; transition: width 0.1s linear; }
 .time-display { margin-top: 0.6em; font-size: 0.9em; color: #7f8c8d; min-height: 1.2em; font-weight: 500; }
 .highlighted-practice { background-color: #e9f3fd !important; border: 2px solid #4A90E2 !important; box-shadow: 0 0 15px rgba(74, 144, 226, 0.5) !important; transition: all 0.3s ease-out; }
 
-/* --- Curriculum, About, Teacher, Student Zone, Parents, School Pathways, Research Sections --- */
-.curriculum-page h2, .about-section h2, .teacher-resources-page h2, 
-.student-engagement-page h2, .parents-page h2, .school-pathways-page h2, .research-evidence-page h2 { 
-    font-size: 1.8em; font-weight: 600; color: #34495e; 
-    border-bottom: 3px solid #4A90E2; padding-bottom: 0.4em; margin-bottom: 1.2em; 
-}
-.curriculum-module, .resource-section, .faq-section, .engagement-section, 
-.content-section /* General class for new page sections */ { 
-    background-color: #ffffff; padding: 1.8em; margin-bottom: 2em; 
-    border-radius: 12px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); 
-}
-.curriculum-module h3, .resource-section h3, .faq-item h3.faq-question, 
-.engagement-section h3, .content-section h3 { 
-    font-size: 1.35em; color: #2980b9; margin-bottom: 0.8em; font-weight: 600; 
-}
-/* Ensure h4 in teacher resource page curriculum module also gets styling */
-.curriculum-module h4, .resource-section h4, .content-section h4 {
-    font-size: 1.1em; color: #3498db; margin-top: 0.8em; margin-bottom: 0.4em; font-weight: 500;
-}
-.curriculum-module h5 { /* For Optional Extension Lessons title */
-    font-size: 1.05em; color: #16a085; margin-top: 1em; margin-bottom: 0.3em; font-weight: 500;
-}
-
-
-.curriculum-module p, .about-section p, .resource-section p, .faq-item p, 
-.engagement-section p, .parents-page p, .school-pathways-page p, .research-evidence-page p, .content-section p { 
-    font-size: 1em; color: #555e68; margin-bottom: 1em; 
-}
-.curriculum-module ul, .about-section ul, .resource-section ul, 
-.engagement-section ul, .parents-page ul, .school-pathways-page ul, .research-evidence-page ul, .content-section ul { 
-    padding-left: 25px; font-size: 0.95em; margin-bottom: 1em; 
-}
-.curriculum-module ul li, .about-section ul li, .resource-section ul li, 
-.engagement-section ul li, .parents-page ul li, .school-pathways-page ul li, .research-evidence-page ul li, .content-section ul li { 
-    margin-bottom: 0.5em; 
-}
-
-.resource-section ul li a, .curriculum-module a, .about-section a, 
-.parents-page a, .school-pathways-page a, .research-evidence-page a, .content-section a { 
-    color: #27ae60; font-weight: 500; text-decoration: none; 
-}
-.resource-section ul li a:hover, .curriculum-module a:hover, .about-section a:hover,
-.parents-page a:hover, .school-pathways-page a:hover, .research-evidence-page a:hover, .content-section a:hover { 
-    color: #229954; text-decoration: underline;
-}
-
+/* --- Curriculum, About, etc. --- */
+.curriculum-page h2, .about-section h2, .teacher-resources-page h2, .student-engagement-page h2, .parents-page h2, .school-pathways-page h2, .research-evidence-page h2 { font-size: 1.8em; font-weight: 600; color: #34495e; border-bottom: 3px solid #4A90E2; padding-bottom: 0.4em; margin-bottom: 1.2em; }
+.curriculum-module, .resource-section, .faq-section, .engagement-section, .content-section { background-color: #ffffff; padding: 1.8em; margin-bottom: 2em; border-radius: 12px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); }
+.curriculum-module h3, .resource-section h3, .faq-item h3.faq-question, .engagement-section h3, .content-section h3 { font-size: 1.35em; color: #2980b9; margin-bottom: 0.8em; font-weight: 600; }
+.curriculum-module h4, .resource-section h4, .content-section h4 { font-size: 1.1em; color: #3498db; margin-top: 0.8em; margin-bottom: 0.4em; font-weight: 500; }
+.curriculum-module h5 { font-size: 1.05em; color: #16a085; margin-top: 1em; margin-bottom: 0.3em; font-weight: 500; }
+.curriculum-module p, .about-section p, .resource-section p, .faq-item p, .engagement-section p, .parents-page p, .school-pathways-page p, .research-evidence-page p, .content-section p { font-size: 1em; color: #555e68; margin-bottom: 1em; }
+.curriculum-module ul, .about-section ul, .resource-section ul, .engagement-section ul, .parents-page ul, .school-pathways-page ul, .research-evidence-page ul, .content-section ul { padding-left: 25px; font-size: 0.95em; margin-bottom: 1em; }
+.curriculum-module ul li, .about-section ul li, .resource-section ul li, .engagement-section ul li, .parents-page ul li, .school-pathways-page ul li, .research-evidence-page ul li, .content-section ul li { margin-bottom: 0.5em; }
+.resource-section ul li a, .curriculum-module a, .about-section a, .parents-page a, .school-pathways-page a, .research-evidence-page a, .content-section a { color: #27ae60; font-weight: 500; text-decoration: none; }
+.resource-section ul li a:hover, .curriculum-module a:hover, .about-section a:hover, .parents-page a:hover, .school-pathways-page a:hover, .research-evidence-page a:hover, .content-section a:hover { color: #229954; text-decoration: underline; }
 
 /* FAQ Section Specific Styling */
 .faq-item { border: 1px solid #e7edf2; border-radius: 8px; margin-bottom: 1em; }
@@ -402,8 +266,8 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
 .faq-item h3.faq-question:hover { background-color: #e9ecef; }
 .faq-item h3.faq-question::after { content: '▼'; font-size: 0.8em; transition: transform 0.3s ease; }
 .faq-item.open h3.faq-question::after { transform: rotate(180deg); }
-.faq-answer { padding: 1.2em; background-color: #fff; border-top: 1px solid #e7edf2; display: none; /* Hidden by default */}
-.faq-item.open .faq-answer { display: block; } /* Show when parent is open */
+.faq-answer { padding: 1.2em; background-color: #fff; border-top: 1px solid #e7edf2; display: none; }
+.faq-item.open .faq-answer { display: block; }
 .faq-answer p { font-size: 0.95em; color: #495057; margin-bottom: 0.5em;}
 .faq-answer p:last-child { margin-bottom: 0; }
 
@@ -424,114 +288,95 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
 #gratitude-list li button.general-app-button:hover { background-color: #c0392b; }
 
 /* --- Large Countdown Timer Display --- */
-#large-countdown-timer {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: 6em; font-weight: 700; color: #3498db;
-    background-color: rgba(240, 248, 255, 0.97); padding: 30px 50px;
-    border-radius: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    z-index: 2000; display: none; text-align: center;
-    min-width: 200px; border: 3px solid #aed6f1;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
+#large-countdown-timer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 6em; font-weight: 700; color: #3498db; background-color: rgba(240, 248, 255, 0.97); padding: 30px 50px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); z-index: 2000; display: none; text-align: center; min-width: 200px; border: 3px solid #aed6f1; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
 
 /* --- Responsive Adjustments --- */
 
 /* Medium screens and below (Tablet portrait and Mobile) - Hamburger menu active */
 @media (max-width: 768px) {
     .header-top-row {
-        /* justify-content: space-between; /* Already set */
-        /* padding-right: 0; /* Not needed if lang button flows */
+        /* justify-content already space-between by default */
     }
     #logo { 
         max-height: 35px; 
-        order: 2; /* Hamburger, Logo, Lang Toggle */
-        margin: 0 auto; /* This helps center it when title is gone */
+        order: 2; 
     } 
     header h1#app-title { 
-        display: none; /* Hide title on smaller screens */
+        display: none; 
     } 
     
     #hamburger-btn {
-        display: block; /* Show hamburger */
+        display: block; 
         order: 1; 
     }
     #language-toggle-btn {
-        position: static; /* Remove absolute positioning */
+        position: static; 
         order: 3; 
         font-size: 0.75em;
         padding: 0.3em 0.6em;
-        margin-left: 0.5em; /* Some space from logo/hamburger */
+        margin-left: 0.5em; 
     }
 
-    nav {
-        display: none; /* Hide nav by default, shown by JS */
+    nav#main-nav { /* Targeting by ID for mobile state */
+        display: none; 
         flex-direction: column;
-        position: absolute; /* Take out of flow, position relative to header */
-        top: 100%; /* Start right below the header */
+        position: absolute; 
+        top: 100%; 
         left: 0;
         width: 100%;
-        background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); /* Match header */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Drop shadow for depth */
-        z-index: 999; /* Ensure it's on top of main content */
+        background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+        z-index: 999; 
         padding-top: 0.5em;
         padding-bottom: 0.5em;
-        max-height: calc(100vh - 60px); /* Prevent menu from being too long, 60px is approx header height */
-        overflow-y: auto; /* Allow scrolling if many items */
-
+        max-height: calc(100vh - 60px); /* Approx header height */
+        overflow-y: auto; 
     }
 
-    nav.nav-open {
-        display: flex; /* Show nav when active */
+    nav#main-nav.nav-open { /* Class added by JS to show menu */
+        display: flex; 
     }
 
-    nav button {
-        width: calc(100% - 2em); /* Full width with padding on sides */
-        margin: 0.3em auto; /* Centered with vertical gap */
+    nav#main-nav button {
+        width: calc(100% - 2em); 
+        margin: 0.3em auto; 
         text-align: left;
         padding: 0.8em 1em;
-        border-radius: 5px; /* Flatter style for dropdown */
+        border-radius: 5px; 
         background-color: transparent;
         color: white;
         border: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        font-size: 0.95em; /* Good touch size */
+        font-size: 0.95em; 
     }
-    nav button:last-child {
+    nav#main-nav button:last-child {
         border-bottom: none;
     }
-
-    nav button:hover {
+    nav#main-nav button:hover {
         background-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(0); /* No hover transform needed in dropdown */
+        transform: translateY(0); 
         color: white;
     }
-
-    nav button.active {
+    nav#main-nav button.active {
         background-color: rgba(255, 255, 255, 0.2);
         font-weight: bold;
-        box-shadow: none; /* Remove inset shadow */
+        box-shadow: none; 
     }
 
-    /* Other general 768px styles */
+    /* Other general 768px styles for content */
     .hero-section h2 { font-size: 1.8em; }
     .hero-section p { font-size: 1em; }
     .practice-category > h3 { font-size: 1.4em; }
     .practice-list li h3 { font-size: 1.1em; }
-    .curriculum-page h2, .about-section h2, .teacher-resources-page h2, 
-    .student-engagement-page h2, .parents-page h2, .school-pathways-page h2, .research-evidence-page h2 { font-size: 1.6em; }
-    .curriculum-module h3, .resource-section h3, .faq-item h3.faq-question, 
-    .engagement-section h3, .content-section h3 { font-size: 1.2em; }
+    .curriculum-page h2, .about-section h2, .teacher-resources-page h2, .student-engagement-page h2, .parents-page h2, .school-pathways-page h2, .research-evidence-page h2 { font-size: 1.6em; }
+    .curriculum-module h3, .resource-section h3, .faq-item h3.faq-question, .engagement-section h3, .content-section h3 { font-size: 1.2em; }
     #large-countdown-timer { font-size: 4.5em; padding: 20px 35px; }
 }
-
 
 /* Small screens - further refinement if needed */
 @media (max-width: 600px) {
     header { padding: 0.6em 0.8em; } 
     #logo { max-height: 30px; }
-    
-    /* header h1#app-title might already be hidden by 768px rule, or re-evaluate if needed here */
-
     main { padding: 1.2em 1em; }
     .hero-section { padding: 2em 1em; }
     .hero-section h2 { font-size: 1.6em; }
@@ -543,8 +388,6 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
 }
 
 @media (max-width: 400px) {
-    /* header h1#app-title already hidden by 768px rule for this specific layout */
-    /* nav button already styled for mobile in 768px rule */
     .hero-section h2 { font-size: 1.4em; }
     .hero-section p { font-size: 0.9em; }
     #large-countdown-timer { font-size: 2.8em; padding: 10px 20px; }
@@ -552,23 +395,25 @@ button.restart-button.general-app-button::before { content: "↺ "; margin-right
     #hamburger-btn { font-size: 1.6em; }
 }
 
-/* Desktop specific adjustments if needed for the new header structure */
+/* Desktop specific adjustments for header layout */
 @media (min-width: 769px) {
     .header-top-row {
-        justify-content: flex-start; /* Align items to start for desktop */
+        justify-content: flex-start; /* Logo, Title | Lang Toggle */
     }
     #logo { 
         order: 1; 
-        margin-right: 1em; /* Space between logo and title */
+        margin-right: 1em; 
+        margin-left: 0; /* Remove auto margin for centering */
     }
     header h1#app-title {
+        display: block; /* Ensure title is displayed */
         order: 2;
-        text-align: left; /* Align title to left on desktop */
-        margin-left: 0; /* Reset margin from mobile */
-        font-size: 1.6em; /* Restore desktop title size */
+        text-align: left; 
+        margin-left: 0; 
+        font-size: 1.6em; 
     }
     #language-toggle-btn {
         order: 3;
-        margin-left: auto; /* Push language toggle to the far right */
+        margin-left: auto; /* Push to far right */
     }
 }
