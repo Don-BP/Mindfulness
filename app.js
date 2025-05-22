@@ -1,7 +1,5 @@
-// --- app.js ---
 document.addEventListener('DOMContentLoaded', () => {
     const contentArea = document.getElementById('content-area');
-    // navButtons will be selected after mainNav is confirmed to exist
     const currentYearSpan = document.getElementById('current-year');
     const largeCountdownDisplay = document.getElementById('large-countdown-timer');
     let largeCountdownInterval = null;
@@ -14,40 +12,42 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLanguage = localStorage.getItem('brainPowerMWLang') || (navigator.language.startsWith('ja') ? 'ja' : 'en');
     const languageToggleBtn = document.getElementById('language-toggle-btn');
 
-    // --- Hamburger Menu Elements (Declared ONCE here) ---
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const mainNav = document.getElementById('main-nav'); // Use getElementById for the nav with ID
-    let navButtons; // Declare here, define after mainNav check
+    // --- Hamburger Menu Elements ---
+    const hamburgerMenuButton = document.getElementById('hamburger-btn'); 
+    const mainNavElement = document.getElementById('main-nav'); 
+    const navButtons = mainNavElement ? mainNavElement.querySelectorAll('button[data-page]') : []; // Define navButtons globally, ensure mainNavElement exists
 
-    if (hamburgerBtn && mainNav) {
-        navButtons = mainNav.querySelectorAll('button[data-page]'); // Define navButtons here
-
-        hamburgerBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('nav-open');
-            const isExpanded = mainNav.classList.contains('nav-open');
-            hamburgerBtn.setAttribute('aria-expanded', isExpanded);
-            hamburgerBtn.classList.toggle('active', isExpanded); 
+    if (hamburgerMenuButton && mainNavElement) {
+        hamburgerMenuButton.addEventListener('click', () => {
+            mainNavElement.classList.toggle('nav-open');
+            const icon = hamburgerMenuButton.querySelector('i');
+            const isExpanded = mainNavElement.classList.contains('nav-open');
+            hamburgerMenuButton.setAttribute('aria-expanded', isExpanded);
+            if (isExpanded) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
 
-        // Close menu when a nav link is clicked
         navButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (mainNav.classList.contains('nav-open')) {
-                    mainNav.classList.remove('nav-open');
-                    if (hamburgerBtn) { // Check if hamburgerBtn exists
-                        hamburgerBtn.setAttribute('aria-expanded', 'false');
-                        hamburgerBtn.classList.remove('active');
-                    }
+            button.addEventListener('click', () => { 
+                if (mainNavElement.classList.contains('nav-open')) {
+                    mainNavElement.classList.remove('nav-open');
+                    const icon = hamburgerMenuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    hamburgerMenuButton.setAttribute('aria-expanded', 'false');
                 }
+                // The loadPage function will be called by the separate event listener below
             });
         });
     } else {
-        console.error("Hamburger button or main navigation (#main-nav) not found. Check HTML IDs.");
-        // Fallback for navButtons if mainNav isn't found, to prevent further errors
-        // though the primary issue is the missing hamburger/nav
-        navButtons = document.querySelectorAll('header nav button'); 
+        console.error("Hamburger button (#hamburger-btn) or main navigation (#main-nav) not found. Check HTML IDs.");
     }
-    // --- End Hamburger Menu ---
+    // --- End Mobile Navigation Toggle ---
 
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
@@ -1469,8 +1469,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
          // Translate hamburger aria-label
-        if (hamburgerBtn) { // Check if hamburgerBtn exists
-            hamburgerBtn.setAttribute('aria-label', currentLanguage === 'en' ? "Toggle navigation menu" : "ナビゲーションメニューを開閉");
+        if (hamburgerMenuButton) { 
+            hamburgerMenuButton.setAttribute('aria-label', currentLanguage === 'en' ? "Toggle navigation menu" : "ナビゲーションメニューを開閉");
         }
     }
     
@@ -1605,19 +1605,21 @@ document.addEventListener('DOMContentLoaded', () => {
     window.loadPage = (pageName, isLangChange = false) => { 
         clearLargeCountdown();
         
-        if (mainNav && mainNav.classList.contains('nav-open')) {
-            const previouslyActivePage = document.querySelector('nav#main-nav button.active')?.dataset.page;
+        if (mainNavElement && mainNavElement.classList.contains('nav-open')) {
+            const previouslyActivePage = mainNavElement.querySelector('button.active')?.dataset.page;
              if (!isLangChange || (isLangChange && previouslyActivePage !== pageName)) {
-                mainNav.classList.remove('nav-open');
-                if (hamburgerBtn) {
-                    hamburgerBtn.setAttribute('aria-expanded', 'false');
-                    hamburgerBtn.classList.remove('active');
+                mainNavElement.classList.remove('nav-open');
+                if (hamburgerMenuButton) {
+                    const icon = hamburgerMenuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    hamburgerMenuButton.setAttribute('aria-expanded', 'false');
                 }
             }
         }
 
         if (pages[pageName]) {
-            const previouslyActivePage = document.querySelector('nav#main-nav button.active')?.dataset.page;
+            const previouslyActivePage = mainNavElement ? mainNavElement.querySelector('button.active')?.dataset.page : null;
 
             if (!isLangChange || (isLangChange && previouslyActivePage !== pageName) ) {
                 document.querySelectorAll('audio').forEach(audio => {
@@ -1668,7 +1670,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.page-content.active').forEach(el => el.classList.remove('active'));
             if(newPageContent) newPageContent.classList.add('active');
 
-            if (navButtons) { // Check if navButtons is defined
+            if (navButtons) { 
                 navButtons.forEach(button => {
                     button.classList.remove('active');
                     if (button.dataset.page === pageName) {
@@ -1683,7 +1685,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (navButtons) { // Check if navButtons is defined before adding listeners
+    // This listener is for the main navigation buttons *inside* nav#main-nav
+    if (navButtons) { 
         navButtons.forEach(button => {
             button.addEventListener('click', (event) => {
                 const pageName = event.target.dataset.page;
@@ -1920,14 +1923,16 @@ document.addEventListener('DOMContentLoaded', () => {
             currentLanguage = currentLanguage === 'en' ? 'jp' : 'en';
             localStorage.setItem('brainPowerMWLang', currentLanguage);
             
-            if (mainNav && mainNav.classList.contains('nav-open')) {
-                mainNav.classList.remove('nav-open');
-                if (hamburgerBtn) {
-                    hamburgerBtn.setAttribute('aria-expanded', 'false');
-                    hamburgerBtn.classList.remove('active');
+            if (mainNavElement && mainNavElement.classList.contains('nav-open')) {
+                mainNavElement.classList.remove('nav-open');
+                if (hamburgerMenuButton) {
+                    const icon = hamburgerMenuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    hamburgerMenuButton.setAttribute('aria-expanded', 'false');
                 }
             }
-            const currentPageButton = document.querySelector('nav#main-nav button.active');
+            const currentPageButton = mainNavElement ? mainNavElement.querySelector('button.active') : null;
             if (currentPageButton) {
                 window.loadPage(currentPageButton.dataset.page, true); 
             } else {
