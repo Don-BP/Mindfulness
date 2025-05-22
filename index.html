@@ -1,33 +1,34 @@
 <!-- index.html -->
 <!DOCTYPE html>
-<html lang="ja"> <!-- Default to Japanese, JS will update -->
+<html lang="ja"> <!-- Default to Japanese -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#4A90E2"/>
+    <meta name="theme-color" content="#4A90E2"/> <!-- MW App color -->
     <title data-lang-key="appTitle">Brain Power MW</title>
     <!-- Google Font: Poppins & Noto Sans JP -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- MW App Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- Font Awesome -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="images/icon-192x192.png">
 </head>
 <body>
     <header>
         <div class="header-top-row">
-            <button id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
             <img src="images/logo.png" alt="Brain Power Logo" id="logo">
             <h1 id="app-title" data-lang-key="appTitle">Brain Power Mindfulness & Wellness</h1>
             <button id="language-toggle-btn" data-lang-key="toggleToJapanese">日本語へ</button>
+            <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <nav id="main-nav"> <!-- Correct HTML comment: Added ID to nav for more specific JS selection -->
+        <nav id="main-nav">
+            <!-- Nav buttons will be dynamically updated by app.js for language,
+                 but structure them here for clarity and initial non-JS view -->
             <button data-page="home" class="active" data-lang-key="navHome">Home</button>
             <button data-page="practices" data-lang-key="navPractices">Practices</button>
             <button data-page="studentZone" data-lang-key="navStudentZone">Student Zone</button>
